@@ -1,0 +1,117 @@
+;/*++
+;
+;Module Name:
+;
+;    LORDVCP.INF
+;
+;    Copyright 2016, Silicon Laboratories Inc.
+;
+;Abstract:
+;    Installation INF for Silicon Labs CP210x device
+;
+;--*/
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=Ports
+ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318}
+Provider=%Provider%
+DriverVer=04/03/2017,6.7.4.261
+CatalogFile=lordvcp.cat
+
+
+; ================= Device section =====================
+
+[Manufacturer]
+%Provider%=SiLabs, NTx86.6.1, NTamd64.6.1
+
+;Models section for installation of x86 driver on Windows 7 and above
+[SiLabs.NTx86.6.1]
+%USB\VID_199B&PID_BA30.DeviceDesc%=silabser.Dev, USB\VID_199B&PID_BA30
+
+;Models section for installation of x64 driver on Windows 7 and above
+[SiLabs.NTamd64.6.1]
+%USB\VID_199B&PID_BA30.DeviceDesc%=silabser.Dev, USB\VID_199B&PID_BA30
+
+[silabser.Dev.NT]
+Include=msports.inf
+AddReg=silabser.AddReg,silabser.NT.AddReg
+CopyFiles=silabser.Files.Ext
+
+[silabser.Dev.NT.Services]
+Include=msports.inf
+Addservice = silabser,0x00000002,silabser.AddService
+
+[silabser.AddService]
+DisplayName    = %silabser.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\silabser.sys
+
+
+; common registry entries 
+[silabser.AddReg]
+HKR,,NTMPDriver,,silabser.sys
+HKR,,RateLimitPurgeMS, 0x10001, 0x64, 0x00, 0x00, 0x00
+HKR,,OverrideDefaultPortSettings, 0x10001, 01,00,00,00
+HKR,,InitialBaudRate, 0x10001, 00,C2,01,00		;115200 initial baud rate
+HKR,,InitialLineControl,, "8N1"				;8-bits, No parity, 1 stop bit
+
+[silabser.NT.AddReg]
+HKR,,PortSubClass,1,01
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+
+[silabser.Dev.NT.HW]
+AddReg=silabser.Dev.NT.HW.AddReg
+
+[silabser.Dev.NT.HW.AddReg]
+HKR,,"SelectiveSuspendTimeout",0x00010001,10000
+
+[silabser.Files.Ext]
+silabser.sys
+
+[SourceDisksNames.x86]
+1=%Disk_Description%,"silabser.sys",,\x86
+
+[SourceDisksNames.amd64]
+1=%Disk_Description%,"silabser.sys",,\x64
+
+[SourceDisksFiles]
+silabser.sys = 1
+
+[DestinationDirs]
+Silabser.Files.Ext = 12
+
+;-------------- WDF Coinstaller installation
+
+[DestinationDirs]
+CoInstaller_CopyFiles = 11
+
+[silabser.Dev.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=CoInstaller_CopyFiles
+
+[CoInstaller_CopyFiles]
+WdfCoinstaller01009.dll
+
+[SourceDisksFiles]
+WdfCoinstaller01009.dll=1
+
+[CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoinstaller01009.dll,WdfCoInstaller"
+
+[silabser.Dev.NT.Wdf]
+KmdfService = silabser, silabser_wdfsect
+[silabser_wdfsect]
+KmdfLibraryVersion = 1.09
+
+;---------------------------------------------------------------;
+
+[Strings]
+Provider="Lord Corporation"
+Disk_Description="Lord Corporation CP210x USB to UART Bridge Installation Disk"
+USB\VID_199B&PID_BA30.DeviceDesc="Lord Sensing Virtual COM Port"
+silabser.SvcDesc="Lord Corporation CP210x USB to UART Bridge Driver"
+PortsClassName = "Ports (COM & LPT)"
+

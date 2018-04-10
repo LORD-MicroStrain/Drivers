@@ -1,0 +1,69 @@
+; 
+; STMicroelectronics Comunication Device Class driver instalation file
+; (C)2006 Copyright STMicroelectronics
+; 
+;
+;  *************************************
+;  * Modified for Microstrain Products *
+;  *************************************
+;
+
+[Version] 
+Signature="$CHICAGO$"
+Class=Ports
+ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318}
+Provider=%STM%
+LayoutFile=layout.inf
+CatalogFile.NTx86=3DM-GX3.cat
+CatalogFile.NTamd64=3DM-GX3.cat
+DriverVer=02/15/2013,1.0.0.0
+
+[Manufacturer] 
+%MFGNAME%=VirComDevice,NT,NTamd64
+
+[DefaultInstall]
+CopyINF="3DM-GX3.inf"
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+[VirComDevice.NT]
+%DESCRIPTION%=DriverInstall,USB\VID_199B&PID_3065
+%DESCRIPTION%=DriverInstall,USB\VID_199B&PID_3D65
+%DESCRIPTION%=DriverInstall,USB\VID_199B&PID_3A65
+
+[VirComDevice.NTamd64]
+%DESCRIPTION%=DriverInstall,USB\VID_199B&PID_3065
+%DESCRIPTION%=DriverInstall,USB\VID_199B&PID_3D65
+%DESCRIPTION%=DriverInstall,USB\VID_199B&PID_3A65
+
+[DriverInstall.NT]
+Include=mdmcpq.inf
+CopyFiles=FakeModemCopyFileSection
+AddReg=DriverInstall.NT.AddReg
+
+[DriverInstall.NT.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,usbser.sys
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+
+[DriverInstall.NT.Services]
+AddService=usbser, 0x00000002, DriverServiceInst
+
+[DriverServiceInst]
+DisplayName=%SERVICE%
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%12%\usbser.sys 
+
+;------------------------------------------------------------------------------
+;  String Definitions
+;------------------------------------------------------------------------------
+
+
+[Strings] 
+STM         = "MicroStrain"
+MFGNAME     = "MicroStrain"
+DESCRIPTION = "MicroStrain Virtual COM Port"
+SERVICE     = "MicroStrain Virtual COM port"
