@@ -1,0 +1,72 @@
+#! /bin/bash
+
+#
+# This file installs a LORD Sensing version of the cp210x driver
+# onto your Linux computer using dkms so that is gets rebuilt when
+# it needs to.
+#
+# Driver changes 4/16/2018
+# * Added support for 3 Mbps baud rate.
+# * Added WSDA-200 USB vid and pid so the driver gets autoloaded.
+#
+# Where do I get the source code?
+# It is installed in /usr/src after running this script or can be
+# extracted from this file:
+# tail -n +$payloadstart wsda200_install.sh | tar -x
+#
+
+#set -e
+#set -o pipefail
+
+packagename="cp210x_lordsensing"
+packageversion="0.2"
+package="$packagename-$packageversion"
+installdir="/usr/src/$package"
+payloadstart=0
+
+install()
+{
+	mkdir -p $installdir
+	tail -n +$payloadstart $0 | tar -xj -C $installdir
+	dkms install $packagename/$packageversion
+	rmmod cp210x
+}
+
+uninstall()
+{
+	dkms remove $packagename/$packageversion --all
+	rm -rf $installdir
+	rmmod cp210x
+}
+
+check_dkms()
+{
+	[ -f `which dkms` ]
+}
+
+run()
+{
+	if [ "$1" = "-h" ]
+	then
+		echo "Usage: $0 [-h|u]"
+		echo "h: print this message"
+		echo "u: uninstall"
+		return 1
+	fi
+
+	if ! check_dkms
+	then
+		echo "DKMS is not installed, please install then rerun"
+		return 2
+	fi
+
+	if [ "$1" = "-u" ]
+	then
+		uninstall	
+	else
+		install
+	fi
+}
+
+run $1
+exit $?
