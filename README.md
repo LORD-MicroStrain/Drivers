@@ -26,7 +26,7 @@ DPInst.exe /lm /sw /sa /PATH "Path/To/DriverFolder"
 
 #### Inertial
 
-[ST_VCOM](https://github.com/LORD-MicroStrain/Drivers/tree/master/Windows/Inertial/ST_VCOM) - Used for the 3DM-GX4 and 3DM-GX5 product lines.
+[ST_VCOM](https://github.com/LORD-MicroStrain/Drivers/tree/master/Windows/Inertial/ST_VCOM) - Used for the 4-, 5- and 7-series product lines.
 
 [3DM-GX3](https://github.com/LORD-MicroStrain/Drivers/tree/master/Windows/Inertial/3DM_GX3) - Used for the 3DM-GX3 product line.
 
