@@ -1,28 +1,23 @@
 import tarfile
-from StringIO import StringIO
+from io import BytesIO
 
 def main():
-	installScript = open("install.sh.in").read()
-	payloadStart = len(installScript.splitlines()) + 1
-	#payloadStart = len(installScript) - 1 + len(str(len(installScript)))
-	#if len(installScript) - 1 + len(str(payloadStart)) != payloadStart:
-	#	payloadStart += 1
-	
-	print "payloadstart=%s" % payloadStart
-	installScript = installScript.replace("payloadstart=0", "payloadstart=%s" % payloadStart)
+    with open("install.sh.in", "r") as f:
+        installScript = f.read()
+    payloadStart = len(installScript.splitlines()) + 1
 
-	output = open("install.sh", 'wb')
-	
-	tarData = StringIO()
-	tarFile = tarfile.open(fileobj=tarData, mode='w:bz2')
-	tarFile.add("cp210x.c")
-	tarFile.add("Makefile")
-	tarFile.add("dkms.conf")
-	tarFile.close()
+    print(f"payloadstart={payloadStart}")
+    installScript = installScript.replace("payloadstart=0", f"payloadstart={payloadStart}")
 
-	output.write(installScript)
-	output.write(tarData.getvalue())
-	output.close()
-	
+    with open("install.sh", 'wb') as output:
+        tarData = BytesIO()
+        with tarfile.open(fileobj=tarData, mode='w:bz2') as tarFile:
+            tarFile.add("cp210x.c")
+            tarFile.add("Makefile")
+            tarFile.add("dkms.conf")
+
+        output.write(installScript.encode())
+        output.write(tarData.getvalue())
+
 if __name__ == "__main__":
-	main()
+    main()
