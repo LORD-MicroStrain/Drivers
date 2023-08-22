@@ -47,7 +47,7 @@ static int cp210x_tiocmset_port(struct usb_serial_port *port,
 		unsigned int, unsigned int);
 static void cp210x_break_ctl(struct tty_struct *, int);
 static int cp210x_port_probe(struct usb_serial_port *);
-static int cp210x_port_remove(struct usb_serial_port *);
+static void cp210x_port_remove(struct usb_serial_port *);
 static void cp210x_dtr_rts(struct usb_serial_port *p, int on);
 
 static const struct usb_device_id id_table[] = {
@@ -1375,14 +1375,12 @@ static int cp210x_port_probe(struct usb_serial_port *port)
 	return 0;
 }
 
-static int cp210x_port_remove(struct usb_serial_port *port)
+static void cp210x_port_remove(struct usb_serial_port *port)
 {
 	struct cp210x_port_private *port_priv;
 
 	port_priv = usb_get_serial_port_data(port);
 	kfree(port_priv);
-
-	return 0;
 }
 
 module_usb_serial_driver(serial_drivers, id_table);
