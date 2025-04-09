@@ -1,0 +1,46 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class=Ports
+ClassGUID={4D36E978-E325-11CE-BFC1-08002BE10318}
+Provider=%EMAS%
+CatalogFile.NTx86=usbcdc.cat
+CatalogFile.NTAMD64=usbcdc.cat
+DriverVer=07/21/2015,6.1.7601.17514
+
+[Manufacturer]
+%EMAS%=DeviceList, NT, NTAMD64, NTIA64
+
+;------------------------------------------------------------------------------
+
+[DeviceList]
+%CDCDEVICE%=DriverInstall,USB\VID_199B&PID_BA2E
+
+[DeviceList.NT]
+%CDCDEVICE%=DriverInstall,USB\VID_199B&PID_BA2E
+
+[DeviceList.NTAMD64]
+%CDCDEVICE%=DriverInstall,USB\VID_199B&PID_BA2E
+
+[DeviceList.NTIA64]
+%CDCDEVICE%=DriverInstall,USB\VID_199B&PID_BA2E
+
+;------------------------------------------------------------------------------
+
+[DriverInstall]
+Include=mdmcpq.inf
+CopyFiles=FakeModemCopyFileSection
+AddReg=LowerFilterAddReg,SerialPropPageAddReg
+
+[DriverInstall.Services]
+Include=mdmcpq.inf
+AddService = usbser, 0x00000002, LowerFilter_Service_Inst
+
+[SerialPropPageAddReg]
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+
+;------------------------------------------------------------------------------
+
+[Strings]
+EMAS      = "LORD Base Station Driver"
+CDCDEVICE = "LORD MicroStrain Base Station"
+SERVICE   = "USB CDC Serial Port Driver"
