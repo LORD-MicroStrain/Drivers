@@ -4,7 +4,7 @@ This repository contains the drivers to communicate with MicroStrain devices.
 
 To install the drivers manually, you can do so with the provided files.
 
-If you have any questions or run into any issues, please let us know! [MicroStrain Support Portal](https://support.microstrain.com)
+If you have any questions or run into any issues, please let us know! [MicroStrain Support Portal](https://support.hbkworld.com)
 
 ## Linux
 [WSDA-200 and WSDA-10X](https://github.com/LORD-MicroStrain/Drivers/releases/tag/linux-cp210x-0.2) - Used for the WSDA-200 and WSDA-10X BaseStations.
