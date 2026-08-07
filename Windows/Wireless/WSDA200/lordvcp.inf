@@ -109,9 +109,9 @@ KmdfLibraryVersion = 1.09
 ;---------------------------------------------------------------;
 
 [Strings]
-Provider="Lord Corporation"
-Disk_Description="Lord Corporation CP210x USB to UART Bridge Installation Disk"
-USB\VID_199B&PID_BA30.DeviceDesc="Lord Sensing Virtual COM Port"
-silabser.SvcDesc="Lord Corporation CP210x USB to UART Bridge Driver"
+Provider="MicroStrain by HBK"
+Disk_Description="MicroStrain by HBK CP210x USB to UART Bridge Installation Disk"
+USB\VID_199B&PID_BA30.DeviceDesc="MicroStrain by HBK Virtual COM Port"
+silabser.SvcDesc="MicroStrain by HBK CP210x USB to UART Bridge Driver"
 PortsClassName = "Ports (COM & LPT)"
 

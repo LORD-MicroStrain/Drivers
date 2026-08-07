@@ -1,7 +1,7 @@
 #! /bin/bash
 
 #
-# This file installs a LORD Sensing version of the cp210x driver
+# This file installs a MicroStrain by HBK version of the cp210x driver
 # onto your Linux computer using dkms so that is gets rebuilt when
 # it needs to.
 #

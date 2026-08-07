@@ -62,6 +62,6 @@ HKR, NDI\params\VistaProperty, optional,   0, "1"
 ; We do not support XP SP1-, 2003 SP1-, ME, 9x.
 
 [Strings]
-Provider              = "Lord Corporation"
-LinuxDevice           = "LORD Sensing WSDA-Pro USB-Ethernet"
+Provider              = "MicroStrain by HBK"
+LinuxDevice           = "MicroStrain by HBK WSDA-Pro USB-Ethernet"
 Vista_Property        = "Optional Vista Property"

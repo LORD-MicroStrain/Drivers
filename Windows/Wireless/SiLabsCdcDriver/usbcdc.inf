@@ -41,6 +41,6 @@ HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
 ;------------------------------------------------------------------------------
 
 [Strings]
-EMAS      = "LORD Base Station Driver"
-CDCDEVICE = "LORD MicroStrain Base Station"
+EMAS      = "MicroStrain by HBK Base Station Driver"
+CDCDEVICE = "MicroStrain by HBK Base Station"
 SERVICE   = "USB CDC Serial Port Driver"
